@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Edit Post : {{ post.title }}</h1>
+{% if user.id == post.author.id %}
+	<form method="POST">
+		{% csrf_token %}
+		{{ form.media }}
+		{{ form.as_p }}
+		<button class="btn btn-danger">Update</button>
+
+		
+
+	</form>
+{% else %}
+	<p>You are not allowed to be here...</p>
+{% endif %}
+
+
+{% endblock %}

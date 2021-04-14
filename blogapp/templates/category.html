@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if cat_posts %}
+	
+	<h1>Category : {{ cats }}</h1>
+	{% for post in cat_posts %}
+
+		<h1><a href="{% url 'postdetail' post.pk %}" class="display-3 link-danger text-decoration-none">{{ post.title|lower }}</a></h1>
+		<br>
+		<small>{{ post.author }} - {{ post.author.email }} - {{ post.post_date }}</small><br>
+		<small><small>{{ post.category }}</small></small>
+		<p>{{ post.body|slice:":200" }}...</p>
+		<br><br>
+	{% endfor %}
+	
+{% else %}
+
+	<h1>Sorry... This page does not exist.</h1>
+{% endif %}
+{% endblock %}

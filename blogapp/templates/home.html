@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<br>
+{% for post in object_list %}
+	<br>
+	<a href="{% url 'postdetail' post.pk %}">
+	<img src="{{ post.header_image.url }}" class="img-fluid rounded img-thumbnail" style="max-width: 50%">
+	</a>
+	<br>
+	<h1><a href="{% url 'postdetail' post.pk %}" class="display-3 link-danger text-decoration-none">{{ post.title|lower }}</a></h1>
+	<br>
+	<small>{{ post.author }} - {{ post.author.email }} - {{ post.post_date }}</small>
+	<small><small>Created in <a href="{% url 'category' post.category|slugify %}" class="link-info text-decoration-none">{{ post.category }}</a></small></small>
+	<p>{{ post.body|safe |truncatewords:50}}...</p><br>
+	<a href="{% url 'postdetail' post.pk %}" class="link-danger text-decoration-none"><span class="badge rounded-pill bg-danger text-light">Read→</span></a>
+	<br><br>
+{% endfor %}
+{% endblock %}

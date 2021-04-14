@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+
+<h1 class="display-1">{{ published.title|lower }}</h1>
+<br>
+<img src="{{ published.header_image.url }}" class="img-fluid rounded" style="max-width: 70%">
+<br>
+<small>{{ published.author }} - {{ published.author.email }} - {{ published.post_date }}</small>
+<p>{{ published.body|safe }}</p>
+<!-- this safe tag is also needed for ckeditor -->
+<br>
+<a href="{% url 'home' %}" class="btn btn-danger">Back to Home</a>
+{% if user.id == published.author.id %}
+	<a href="{% url 'editpost' published.pk %}" class="btn btn-danger">Edit Post</a>
+	<a href="{% url 'deletepost' published.pk %}" class="btn btn-danger">Delete Post</a>
+
+{% endif %}<br><br>
+{% if user.is_authenticated %}
+<form action="{% url 'like_post' published.pk %}" method="POST" >
+	{% csrf_token %}
+	{% if liked %}
+	<button type="submit" name="post_id" value="{{ published.id }}" class="btn btn-danger btn-sm">Unlike</button>
+	{% else %}
+	<button type="submit" name="post_id" value="{{ published.id }}" class="btn btn-outline-danger btn-sm">Like</button>
+	 
+	{% endif %}
+{% else %}
+<a class="link-danger text-decoration-none" href="{% url 'login' %}">Login</a> to like
+{% endif %}
+<span class="badge bg-warning">{{ total_likes }} Likes</span>
+</form>
+
+
+
+{% endblock %}

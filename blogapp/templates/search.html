@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<br>
+<h1>Search for "{{ search_key }}"</h1>
+<br>
+{% for post in search_result %}
+	<h1><a href="{% url 'postdetail' post.pk %}" class="display-3 link-danger text-decoration-none">{{ post.title|lower }}</a></h1>
+	<br>
+	<small>{{ post.author }} - {{ post.author.email }} - {{ post.post_date }}</small>
+	<small><small>Created in <a href="{% url 'category' post.category|slugify %}" class="link-info text-decoration-none">{{ post.category }}</a></small></small>
+	<p>{{ post.body|safe |truncatewords:50}}...</p><br>
+	<a href="{% url 'postdetail' post.pk %}" class="link-danger text-decoration-none"><span class="badge rounded-pill bg-danger text-light">Read→</span></a>
+	<br><br>
+{% endfor %}
+{{ searched }}
+{% endblock %}
